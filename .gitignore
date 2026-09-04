@@ -24,3 +24,6 @@ Kawa.app
 #
 Carthage/Checkouts
 Carthage/Build
+Carthage/DerivedData
+build_output/
+
