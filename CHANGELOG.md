@@ -1,3 +1,9 @@
+## 1.2.0 (4 Sep 2026)
+
+* Support Apple Silicon (M1/M2/M3/M4, `arm64`) and Intel (`x86_64`) natively as Universal 2 binary
+* Update minimum macOS deployment target to macOS 11.0
+* Add automated build and release GitHub Actions workflow
+
 ## 1.1.0 (10 Nov 2017)
 
 * Remove previous notifications on new one (#17)
