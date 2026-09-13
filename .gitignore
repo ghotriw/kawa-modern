@@ -18,6 +18,9 @@ DerivedData
 *.xcuserstate
 /kawa.xcarchive
 Kawa.app
+Kawa Modern.app
+*.zip
+*.sha256
 .DS_Store
 
 build_output/

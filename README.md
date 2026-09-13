@@ -1,58 +1,74 @@
 ![logo](resource/png/logo.png)
 
-# Kawa [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/utatti/kawa/master/LICENSE) [![GitHub release](https://img.shields.io/github/release/utatti/kawa.svg)](https://github.com/utatti/kawa/releases)
+# Kawa Modern [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE) [![GitHub release](https://img.shields.io/github/release/ghotriw/kawa-modern.svg)](https://github.com/ghotriw/kawa-modern/releases)
 
-A macOS input source switcher with user-defined shortcuts.
+A modern, ultra-fast macOS input source switcher with user-defined shortcuts.
 
-## Demo
+> [!NOTE]
+> **Kawa Modern** is a modernized, standalone continuation of the original [Kawa](https://github.com/hatashiro/kawa) project created by Hyunje Jun ([@hatashiro](https://github.com/hatashiro)). It has been completely re-engineered from the ground up for modern macOS with Swift and SwiftUI, zero external dependencies, and native Apple Silicon / Intel support.
 
-[![demo](https://cloud.githubusercontent.com/assets/1013641/9109734/d73505e4-3c72-11e5-9c71-49cdf4a484da.gif)](http://vimeo.com/135542587)
+<p align="center">
+  <img src="resource/png/preferences.png" alt="Kawa Modern Preferences" width="500">
+</p>
+
+---
 
 ## Install
 
 ### Using [Homebrew](https://brew.sh/)
 
 ```shell
-brew update
-brew install --cask kawa
+brew install ghotriw/tap/kawa-modern
 ```
 
 ### Manually
 
-The prebuilt binaries can be found in [Releases](https://github.com/utatti/kawa/releases).
+Download the latest prebuilt binary from [Releases](https://github.com/ghotriw/kawa-modern/releases):
 
-Unzip `Kawa.zip` and move `Kawa.app` to `Applications`.
+1. Download `Kawa-Modern.zip`.
+2. Unzip and drag `Kawa Modern.app` into your `/Applications` folder.
+3. Launch **Kawa Modern**. When prompted, grant **Accessibility** permissions so the app can register global hotkeys.
+
+---
+
+## Requirements
+
+* macOS 13.0 (Ventura) or later
+* Apple Silicon (M1/M2/M3/M4) or Intel Mac (Universal binary)
+
+---
 
 ## Caveats
 
 ### CJKV input sources
 
-There is a known bug in the macOS's Carbon library that switching keyboard
-layouts using `TISSelectInputSource` doesn't work well with complex input
-sources like [CJKV](https://en.wikipedia.org/wiki/CJK_characters).
+There is an established behavior in macOS's Carbon library where switching keyboard layouts using `TISSelectInputSource` can be temperamental with complex composite input sources like [CJKV](https://en.wikipedia.org/wiki/CJK_characters).
 
-## Requirements
+---
 
-* macOS 13.0 or later
-* Apple Silicon or Intel Mac (Universal 2 binary)
+## Development & Building
 
-## Development
-
-Kawa has **zero external dependencies**. All hotkey management and UI are implemented using native macOS frameworks (SwiftUI, AppKit, Carbon).
-
-To build the project:
+To build the project locally from source:
 
 ```bash
 # Clone the repository
-git clone git@github.com:utatti/kawa.git
-cd kawa
+git clone https://github.com/ghotriw/kawa-modern.git
+cd kawa-modern
 
-# Build via xcodebuild
-xcodebuild -project kawa.xcodeproj -scheme kawa -configuration Release build
+# Build (Spotlight will ignore .noindex)
+xcodebuild -project kawa.xcodeproj -scheme kawa -configuration Release -derivedDataPath build.noindex build
+
+# Install to /Applications
+cp -R "build.noindex/Build/Products/Release/Kawa Modern.app" /Applications/
 ```
 
-Or simply open `kawa.xcodeproj` in Xcode and press **Cmd + R**.
+Or open `kawa.xcodeproj` in Xcode and press **Cmd + R**.
 
-## License
+---
 
-Kawa is released under the [MIT License](LICENSE).
+## License & Credits
+
+Kawa Modern is licensed under the [MIT License](LICENSE).
+
+* Original Kawa created by [Hyunje Jun](https://github.com/hatashiro).
+* Modernized and maintained by [Andrii Honcharov](https://github.com/ghotriw).

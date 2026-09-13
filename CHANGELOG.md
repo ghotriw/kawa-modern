@@ -1,3 +1,11 @@
+## 2.0.1 (13 Sep 2026)
+
+* Rebrand project as **Kawa Modern** with bundle identifier `com.ghotriw.Kawa`
+* Add automatic settings and hotkey migration from legacy Kawa installations
+* Fix deprecation warning for `IconRef` rendering using `PlotIconRefInContext`
+* Clean up obsolete Carthage dependencies (`Cartfile`) and legacy test targets
+* Update documentation, screenshots, and Homebrew tap installation instructions
+
 ## 2.0.0 (13 Sep 2026)
 
 * Modernize settings interface using SwiftUI and native AppKit components

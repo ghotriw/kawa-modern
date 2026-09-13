@@ -25,7 +25,7 @@
 		A00000071B654099005682C0 /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
 		A00000091B654099005682C0 /* PreferencesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		A000000B1B654099005682C0 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
-		CC6D8EC81B654099005682C0 /* Kawa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kawa.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC6D8EC81B654099005682C0 /* Kawa Modern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Kawa Modern.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC6D8ECC1B654099005682C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC6D8ED11B654099005682C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		CC6D8EEA1B654143005682C0 /* InputSourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputSourceManager.swift; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		CC6D8EC91B654099005682C0 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC6D8EC81B654099005682C0 /* Kawa.app */,
+				CC6D8EC81B654099005682C0 /* Kawa Modern.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -101,7 +101,7 @@
 			);
 			name = kawa;
 			productName = kawa;
-			productReference = CC6D8EC81B654099005682C0 /* Kawa.app */;
+			productReference = CC6D8EC81B654099005682C0 /* Kawa Modern.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -112,7 +112,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
-				ORGANIZATIONNAME = noraesae;
+				ORGANIZATIONNAME = ghotriw;
 				TargetAttributes = {
 					CC6D8EC71B654099005682C0 = {
 						CreatedOnToolsVersion = 6.4;
@@ -282,8 +282,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.noraesae.Kawa";
-				PRODUCT_NAME = Kawa;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ghotriw.Kawa";
+				PRODUCT_NAME = "Kawa Modern";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -299,8 +299,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "net.noraesae.Kawa";
-				PRODUCT_NAME = Kawa;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.ghotriw.Kawa";
+				PRODUCT_NAME = "Kawa Modern";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

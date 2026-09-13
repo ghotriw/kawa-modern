@@ -80,7 +80,16 @@ final class ShortcutManager: ObservableObject {
     private let storageKey = "kawa_shortcuts_v2"
 
     private init() {
-        self.showNotifications = UserDefaults.standard.bool(forKey: "kawa_show_notifications")
+        let legacyDomain = UserDefaults.standard.persistentDomain(forName: "net.noraesae.Kawa")
+        if let notifSetting = UserDefaults.standard.object(forKey: "kawa_show_notifications") as? Bool {
+            self.showNotifications = notifSetting
+        } else if let legacyNotif = legacyDomain?["kawa_show_notifications"] as? Bool {
+            self.showNotifications = legacyNotif
+            UserDefaults.standard.set(legacyNotif, forKey: "kawa_show_notifications")
+        } else {
+            self.showNotifications = false
+        }
+
         loadSavedShortcuts()
         installCarbonHandler()
         bindAll()
@@ -130,19 +139,26 @@ final class ShortcutManager: ObservableObject {
            !decoded.isEmpty {
             loaded = decoded
         } else {
-            // Migrate from legacy MASShortcut format
-            let domain = UserDefaults.standard.persistentDomain(forName: "net.noraesae.Kawa") ?? [:]
-            for (key, val) in domain {
-                guard key.hasPrefix("com-apple-keylayout-"), let data = val as? Data else { continue }
-                if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
-                   let objects = plist["$objects"] as? [Any] {
-                    for obj in objects {
-                        if let dict = obj as? [String: Any],
-                           let keyCode = dict["KeyCode"] as? Int,
-                           let flags = dict["ModifierFlags"] as? Int {
-                            let carbonMods = KeyCombo.carbonModifiersFromLegacyCocoa(flags)
-                            let originalSourceId = key.replacingOccurrences(of: "-", with: ".")
-                            loaded[originalSourceId] = KeyCombo(keyCode: UInt16(keyCode), carbonModifiers: carbonMods)
+            // Check legacy domain (net.noraesae.Kawa) for v2 format or legacy MASShortcut format
+            let legacyDomain = UserDefaults.standard.persistentDomain(forName: "net.noraesae.Kawa") ?? [:]
+            if let legacyData = legacyDomain[storageKey] as? Data,
+               let decoded = try? JSONDecoder().decode([String: KeyCombo].self, from: legacyData),
+               !decoded.isEmpty {
+                loaded = decoded
+            } else {
+                // Migrate from legacy MASShortcut format
+                for (key, val) in legacyDomain {
+                    guard key.hasPrefix("com-apple-keylayout-"), let data = val as? Data else { continue }
+                    if let plist = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: Any],
+                       let objects = plist["$objects"] as? [Any] {
+                        for obj in objects {
+                            if let dict = obj as? [String: Any],
+                               let keyCode = dict["KeyCode"] as? Int,
+                               let flags = dict["ModifierFlags"] as? Int {
+                                let carbonMods = KeyCombo.carbonModifiersFromLegacyCocoa(flags)
+                                let originalSourceId = key.replacingOccurrences(of: "-", with: ".")
+                                loaded[originalSourceId] = KeyCombo(keyCode: UInt16(keyCode), carbonModifiers: carbonMods)
+                            }
                         }
                     }
                 }

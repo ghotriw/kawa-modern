@@ -26,7 +26,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let image = NSImage(named: "StatusItemIcon")
         image?.isTemplate = true
         button.image = image
-        button.toolTip = "Click to open Kawa preferences"
+        button.toolTip = "Click to open Kawa Modern preferences"
         button.target = self
         button.action = #selector(statusBarClicked(_:))
         button.sendAction(on: [.leftMouseUp, .rightMouseUp])
@@ -42,7 +42,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             let menu = NSMenu()
             menu.addItem(NSMenuItem(title: "Preferences...", action: #selector(showPreferencesMenuAction), keyEquivalent: ","))
             menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: "Quit Kawa", action: #selector(quitApp), keyEquivalent: "q"))
+            menu.addItem(NSMenuItem(title: "Quit Kawa Modern", action: #selector(quitApp), keyEquivalent: "q"))
 
             statusItem.menu = menu
             statusItem.button?.performClick(nil)
@@ -77,7 +77,7 @@ final class WindowManager: NSObject, NSWindowDelegate {
         if window == nil {
             let hostingController = NSHostingController(rootView: PreferencesView())
             let win = NSWindow(contentViewController: hostingController)
-            win.title = "Kawa Preferences"
+            win.title = "Kawa Modern Preferences"
             win.styleMask = [.titled, .closable]
             win.isReleasedWhenClosed = false
             win.delegate = self

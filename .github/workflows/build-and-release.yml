@@ -35,24 +35,24 @@ jobs:
       - name: Create Zip Archive
         run: |
           cd build_output/Build/Products/Release
-          ditto -c -k --sequesterRsrc --keepParent Kawa.app Kawa.app.zip
-          shasum -a 256 Kawa.app.zip > Kawa.app.zip.sha256
+          ditto -c -k --sequesterRsrc --keepParent "Kawa Modern.app" Kawa-Modern.zip
+          shasum -a 256 Kawa-Modern.zip > Kawa-Modern.zip.sha256
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Kawa-Universal
+          name: Kawa-Modern-Universal
           path: |
-            build_output/Build/Products/Release/Kawa.app.zip
-            build_output/Build/Products/Release/Kawa.app.zip.sha256
+            build_output/Build/Products/Release/Kawa-Modern.zip
+            build_output/Build/Products/Release/Kawa-Modern.zip.sha256
 
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            build_output/Build/Products/Release/Kawa.app.zip
-            build_output/Build/Products/Release/Kawa.app.zip.sha256
+            build_output/Build/Products/Release/Kawa-Modern.zip
+            build_output/Build/Products/Release/Kawa-Modern.zip.sha256
           draft: false
           prerelease: false
           generate_release_notes: true

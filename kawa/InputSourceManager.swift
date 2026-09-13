@@ -66,8 +66,7 @@ final class InputSourceManager: ObservableObject {
                 if let url = tisSource.iconImageURL {
                     iconImage = NSImage(contentsOf: url)
                     if iconImage == nil {
-                        // Try with @2x or tiff extension
-                        let ext = url.pathExtension
+                        // Try with tiff extension
                         let base = url.deletingPathExtension()
                         let retinaURL = base.appendingPathExtension("tiff")
                         iconImage = NSImage(contentsOf: retinaURL)
@@ -75,7 +74,7 @@ final class InputSourceManager: ObservableObject {
                 }
 
                 if iconImage == nil, let iconRef = tisSource.iconRef {
-                    iconImage = NSImage(iconRef: iconRef)
+                    iconImage = InputSourceManager.image(from: iconRef)
                 }
 
                 return InputSourceItem(
@@ -85,5 +84,22 @@ final class InputSourceManager: ObservableObject {
                     tisSource: tisSource
                 )
             }
+    }
+
+    static func image(from iconRef: IconRef, size: NSSize = NSSize(width: 32, height: 32)) -> NSImage {
+        return NSImage(size: size, flipped: false) { rect in
+            guard let ctx = NSGraphicsContext.current?.cgContext else { return false }
+            var r = CGRect(origin: .zero, size: rect.size)
+            let status = PlotIconRefInContext(
+                ctx,
+                &r,
+                IconAlignmentType(kAlignAbsoluteCenter),
+                IconTransformType(kTransformNone),
+                nil,
+                PlotIconRefFlags(kPlotIconRefNormalFlags),
+                iconRef
+            )
+            return status == noErr
+        }
     }
 }

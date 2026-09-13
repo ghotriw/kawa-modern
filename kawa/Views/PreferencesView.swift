@@ -14,7 +14,7 @@ struct PreferencesView: View {
                     .frame(width: 40, height: 40)
 
                 VStack(alignment: .leading, spacing: 2) {
-                    Text("Kawa")
+                    Text("Kawa Modern")
                         .font(.headline)
                     Text("Fast input source switcher")
                         .font(.subheadline)
@@ -80,7 +80,7 @@ struct PreferencesView: View {
                 Toggle("Show notification when switching", isOn: $shortcutManager.showNotifications)
                     .toggleStyle(.checkbox)
 
-                Toggle("Launch Kawa at login", isOn: $launchAtLogin.isEnabled)
+                Toggle("Launch Kawa Modern at login", isOn: $launchAtLogin.isEnabled)
                     .toggleStyle(.checkbox)
             }
             .padding(.horizontal, 20)
@@ -90,13 +90,14 @@ struct PreferencesView: View {
 
             // Footer
             HStack {
-                Text("Version 2.0")
+                let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.1"
+                Text("Version \(version)")
                     .font(.caption)
                     .foregroundColor(.secondary)
 
                 Spacer()
 
-                Button("Quit Kawa") {
+                Button("Quit Kawa Modern") {
                     NSApplication.shared.terminate(nil)
                 }
                 .buttonStyle(.bordered)
