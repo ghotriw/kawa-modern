@@ -1,3 +1,13 @@
+## 2.0.0 (13 Sep 2026)
+
+* Modernize settings interface using SwiftUI and native AppKit components
+* Fix shortcut activation on startup: hotkeys now work immediately without opening preferences
+* Replace MASShortcut and Carthage with a zero-dependency native Carbon HotKey engine targeting `GetEventDispatcherTarget`
+* Add automatic conflict resolution and migration for configured shortcuts
+* Add native Launch at Login support via ServiceManagement (`SMAppService`)
+* Modernize notifications with `UserNotifications.framework`
+* Update minimum deployment target to macOS 13.0
+
 ## 1.2.0 (4 Sep 2026)
 
 * Support Apple Silicon (M1/M2/M3/M4, `arm64`) and Intel (`x86_64`) natively as Universal 2 binary

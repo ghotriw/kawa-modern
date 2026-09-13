@@ -31,25 +31,27 @@ There is a known bug in the macOS's Carbon library that switching keyboard
 layouts using `TISSelectInputSource` doesn't work well with complex input
 sources like [CJKV](https://en.wikipedia.org/wiki/CJK_characters).
 
+## Requirements
+
+* macOS 13.0 or later
+* Apple Silicon or Intel Mac (Universal 2 binary)
+
 ## Development
 
-We use [Carthage](https://github.com/Carthage/Carthage) as a dependency manager.
-You can find the latest releases of Carthage [here](https://github.com/Carthage/Carthage/releases),
-or just install it with [Homebrew](http://brew.sh).
+Kawa has **zero external dependencies**. All hotkey management and UI are implemented using native macOS frameworks (SwiftUI, AppKit, Carbon).
+
+To build the project:
 
 ```bash
-$ brew update
-$ brew install carthage
+# Clone the repository
+git clone git@github.com:utatti/kawa.git
+cd kawa
+
+# Build via xcodebuild
+xcodebuild -project kawa.xcodeproj -scheme kawa -configuration Release build
 ```
 
-To clone the Git repository of Kawa and install dependencies:
-
-```bash
-$ git clone git@github.com:utatti/kawa.git
-$ carthage bootstrap
-```
-
-After dependency installation, open the project with Xcode.
+Or simply open `kawa.xcodeproj` in Xcode and press **Cmd + R**.
 
 ## License
 

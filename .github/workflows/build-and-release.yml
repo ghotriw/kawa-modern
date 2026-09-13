@@ -23,10 +23,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Dependencies
-        run: |
-          ./script/bootstrap.sh
-
       - name: Build Kawa (Universal)
         run: |
           xcodebuild -project kawa.xcodeproj \

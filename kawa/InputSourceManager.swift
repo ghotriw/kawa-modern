@@ -1,74 +1,89 @@
 import Carbon
 import Cocoa
+import Combine
 
-class InputSource {
-  let tisInputSource: TISInputSource
-  let icon: NSImage?
+struct InputSourceItem: Identifiable, Hashable {
+    let id: String
+    let name: String
+    let icon: NSImage?
+    let tisSource: TISInputSource
 
-  var id: String {
-    return tisInputSource.id
-  }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
 
-  var name: String {
-    return tisInputSource.name
-  }
+    static func == (lhs: InputSourceItem, rhs: InputSourceItem) -> Bool {
+        lhs.id == rhs.id
+    }
 
-  init(tisInputSource: TISInputSource) {
-    self.tisInputSource = tisInputSource
+    func select() {
+        TISSelectInputSource(tisSource)
+    }
+}
 
-    var iconImage: NSImage? = nil
+final class InputSourceManager: ObservableObject {
+    static let shared = InputSourceManager()
 
-    if let imageURL = tisInputSource.iconImageURL {
-      for url in [imageURL.retinaImageURL, imageURL.tiffImageURL, imageURL] {
-        if let image = NSImage(contentsOf: url) {
-          iconImage = image
-          break
+    @Published private(set) var sources: [InputSourceItem] = []
+    @Published private(set) var currentSourceId: String = ""
+
+    private init() {
+        reload()
+        setupNotificationObserver()
+    }
+
+    func reload() {
+        sources = Self.fetchSources()
+        updateCurrentSource()
+    }
+
+    func updateCurrentSource() {
+        if let current = TISCopyCurrentKeyboardInputSource()?.takeRetainedValue() {
+            currentSourceId = current.id
         }
-      }
     }
 
-    if iconImage == nil, let iconRef = tisInputSource.iconRef {
-      iconImage = NSImage(iconRef: iconRef)
+    private func setupNotificationObserver() {
+        DistributedNotificationCenter.default().addObserver(
+            forName: NSNotification.Name(kTISNotifySelectedKeyboardInputSourceChanged as String),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            self?.updateCurrentSource()
+        }
     }
 
-    self.icon = iconImage
-  }
+    static func fetchSources() -> [InputSourceItem] {
+        guard let list = TISCreateInputSourceList(nil, false)?.takeRetainedValue() as? [TISInputSource] else {
+            return []
+        }
 
-  func select() {
-    TISSelectInputSource(tisInputSource)
-  }
-}
+        return list
+            .filter { $0.category == TISInputSource.Category.keyboardInputSource && $0.isSelectable }
+            .map { tisSource in
+                var iconImage: NSImage? = nil
 
-extension InputSource: Equatable {
-  static func == (lhs: InputSource, rhs: InputSource) -> Bool {
-    return lhs.id == rhs.id
-  }
-}
+                if let url = tisSource.iconImageURL {
+                    iconImage = NSImage(contentsOf: url)
+                    if iconImage == nil {
+                        // Try with @2x or tiff extension
+                        let ext = url.pathExtension
+                        let base = url.deletingPathExtension()
+                        let retinaURL = base.appendingPathExtension("tiff")
+                        iconImage = NSImage(contentsOf: retinaURL)
+                    }
+                }
 
-extension InputSource {
-  static var sources: [InputSource] {
-    let inputSourceNSArray = TISCreateInputSourceList(nil, false).takeRetainedValue() as NSArray
-    let inputSourceList = inputSourceNSArray as! [TISInputSource]
+                if iconImage == nil, let iconRef = tisSource.iconRef {
+                    iconImage = NSImage(iconRef: iconRef)
+                }
 
-    return inputSourceList
-      .filter {
-        $0.category == TISInputSource.Category.keyboardInputSource && $0.isSelectable
-    }.map {
-      InputSource(tisInputSource: $0)
+                return InputSourceItem(
+                    id: tisSource.id,
+                    name: tisSource.name,
+                    icon: iconImage,
+                    tisSource: tisSource
+                )
+            }
     }
-  }
-}
-
-private extension URL {
-  var retinaImageURL: URL {
-    var components = pathComponents
-    let filename: String = components.removeLast()
-    let ext: String = pathExtension
-    let retinaFilename = filename.replacingOccurrences(of: "." + ext, with: "@2x." + ext)
-    return NSURL.fileURL(withPathComponents: components + [retinaFilename])!
-  }
-
-  var tiffImageURL: URL {
-    return deletingPathExtension().appendingPathExtension("tiff")
-  }
 }

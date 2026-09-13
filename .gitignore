@@ -20,10 +20,5 @@ DerivedData
 Kawa.app
 .DS_Store
 
-# Carthage
-#
-Carthage/Checkouts
-Carthage/Build
-Carthage/DerivedData
 build_output/
-
+*.noindex/
