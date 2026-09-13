@@ -1,3 +1,8 @@
+## 2.0.2 (13 Sep 2026)
+
+* Update CI build environment to `macos-26` runner for modern macOS appearance and controls
+* Refine preferences window styling for seamless appearance
+
 ## 2.0.1 (13 Sep 2026)
 
 * Rebrand project as **Kawa Modern** with bundle identifier `com.ghotriw.Kawa`

@@ -79,6 +79,7 @@ final class WindowManager: NSObject, NSWindowDelegate {
             let win = NSWindow(contentViewController: hostingController)
             win.title = "Kawa Modern Preferences"
             win.styleMask = [.titled, .closable]
+            win.toolbarStyle = .unifiedCompact
             win.isReleasedWhenClosed = false
             win.delegate = self
             win.center()
@@ -91,7 +92,6 @@ final class WindowManager: NSObject, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
-        // Return focus to menu bar owning app
         NSWorkspace.shared.menuBarOwningApplication?.activate()
     }
 }

@@ -61,12 +61,8 @@ struct PreferencesView: View {
                             ShortcutRecorderView(sourceId: source.id)
                                 .frame(width: 140, height: 28)
                         }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .background(
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(Color(nsColor: .controlBackgroundColor))
-                        )
+                        .padding(.horizontal, 4)
+                        .padding(.vertical, 4)
                     }
                 }
                 .padding(.horizontal, 20)
@@ -105,7 +101,6 @@ struct PreferencesView: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 10)
-            .background(Color(nsColor: .windowBackgroundColor))
         }
         .frame(width: 420)
         .onAppear {
