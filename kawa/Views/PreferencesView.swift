@@ -86,7 +86,7 @@ struct PreferencesView: View {
 
             // Footer
             HStack {
-                let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.1"
+                let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0.3"
                 Text("Version \(version)")
                     .font(.caption)
                     .foregroundColor(.secondary)

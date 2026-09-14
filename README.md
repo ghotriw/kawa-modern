@@ -1,5 +1,3 @@
-![logo](resource/png/logo.png)
-
 # Kawa Modern [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](LICENSE) [![GitHub release](https://img.shields.io/github/release/ghotriw/kawa-modern.svg)](https://github.com/ghotriw/kawa-modern/releases)
 
 A modern, ultra-fast macOS input source switcher with user-defined shortcuts.
@@ -35,14 +33,6 @@ Download the latest prebuilt binary from [Releases](https://github.com/ghotriw/k
 
 * macOS 13.0 (Ventura) or later
 * Apple Silicon (M1/M2/M3/M4) or Intel Mac (Universal binary)
-
----
-
-## Caveats
-
-### CJKV input sources
-
-There is an established behavior in macOS's Carbon library where switching keyboard layouts using `TISSelectInputSource` can be temperamental with complex composite input sources like [CJKV](https://en.wikipedia.org/wiki/CJK_characters).
 
 ---
 

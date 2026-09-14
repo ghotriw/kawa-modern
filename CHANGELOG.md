@@ -1,3 +1,8 @@
+## 2.0.3 (14 Sep 2026)
+
+* Update application icon with modern teal gradient palette
+* Clean up legacy graphics and obsolete logo assets
+
 ## 2.0.2 (13 Sep 2026)
 
 * Update CI build environment to `macos-26` runner for modern macOS appearance and controls
